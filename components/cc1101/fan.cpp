@@ -108,7 +108,7 @@ void CC1101Fan::publish_state() {
   auto current_speed = this->speed;
   this->speed = 0;
   this->state = 0;
-  if (this->Speed >= 0) { 
+  if (this->Speed >= 1 && this->Speed <= this->speed_count_) { 
     this->speed = this->Speed;
     this->state = 1;
   }
@@ -158,7 +158,7 @@ void CC1101Fan::control(const fan::FanCall &call) {
 
 void CC1101Fan::set_fan_speed(uint8_t speed) {
   ESP_LOGD("cc1101_fan", "RF called with %d while last is %d and speed assumed at %d", speed, this->LastSpeed, this->Speed);
-  if (speed != this->LastSpeed ) {
+  if (speed != this->Speed ) {
     // Handle speed control
     switch (speed) {
       case 4:
